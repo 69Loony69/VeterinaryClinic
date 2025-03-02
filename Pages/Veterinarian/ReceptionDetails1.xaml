@@ -1,0 +1,93 @@
+﻿<Page x:Class="VeterinaryСlinic.Pages.Veterinarian.ReceptionDetails1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VeterinaryСlinic.Pages.Veterinarian"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ReceptionDetails">
+
+    <Grid Background="#FFFAF5EF">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="190*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="48*"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="0.5" CornerRadius="20" HorizontalAlignment="Right" Margin="0 20 0 20">
+            <Image Source="{Binding Patients.View.ImageFileName, Mode=OneWay}" OpacityMask="#FFD0A5A5"/>
+        </Border>
+        <StackPanel Grid.Column="1" Margin="10 20 0 0">
+            <Label Content="Данные о владельце" FontSize="28" FontFamily="Cruinn" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="ФИО владельца: " FontSize="20" FontFamily="Cruinn"/>
+                <Label Content="{Binding Patients.Owners.FullName, Mode=OneWay}"  FontSize="20" FontFamily="Cruinn"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Телефон: " FontSize="20" FontFamily="Cruinn"/>
+                <Label Content="{Binding Patients.Owners.Phone, Mode=OneWay}"  FontSize="20" FontFamily="Cruinn"/>
+            </StackPanel>
+            <Label Content="Данные о пациенте" FontSize="28" Margin="0 10 0 0" FontFamily="Cruinn" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Кличка: " FontSize="20" FontFamily="Cruinn"/>
+                <Label Content="{Binding Patients.Name, Mode=OneWay}"  FontSize="20" FontFamily="Cruinn"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Вид: " FontSize="20" FontFamily="Cruinn"/>
+                <Label Content="{Binding Patients.View.Name, Mode=OneWay}"  FontSize="20" FontFamily="Cruinn"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Наличие породы: " FontSize="20" FontFamily="Cruinn"/>
+                <Label Content="{Binding Patients.Breed, Mode=OneWay}"  FontSize="20" FontFamily="Cruinn"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Пол: " FontSize="20" FontFamily="Cruinn"/>
+                <Label Content="{Binding Patients.Paul, Mode=OneWay}"  FontSize="20" FontFamily="Cruinn"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Дата рождения: " FontSize="20" FontFamily="Cruinn"/>
+                <Label Content="{Binding Patients.FormattedDayOfBirth, Mode=OneWay}"  FontSize="20" FontFamily="Cruinn"/>
+            </StackPanel>
+        </StackPanel>
+        <DataGrid Name="dgReceptionDetails"  AutoGenerateColumns="False" ColumnWidth="*" Grid.ColumnSpan="3" Grid.Row="1">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#FFDFF1C5"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontFamily" Value="Cruinn"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Height" Value="30"/>
+                </Style>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="FontSize" Value="22"/>
+                    <Setter Property="FontFamily" Value="Cruinn"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FFEFF6E6"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Код приёма" Binding="{Binding ReceptionId, Mode=OneWay}"  IsReadOnly="True"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding FormattedDate, Mode=OneWay}"  IsReadOnly="True"/>
+                <DataGridTextColumn Header="Время" Binding="{Binding Time, Mode=OneWay}"  IsReadOnly="True"/>
+                <DataGridTextColumn Header="Жалоба на здоровье" Binding="{Binding Complaints, Mode=OneWay}"  IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ветеринар" Binding="{Binding Veterinarians.FullName, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Диагноз" Binding="{Binding Diagnosis.Name, Mode=OneWay}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Background="#FFF3E4F6"/>
+        <Button Content="Назад" Grid.Row="2" Click="Back" Width="230" Height="45" Margin="0 0 0 0" Background="#FFC7D5F1"  FontFamily="Cruinn" FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для того, чтобы вернуться назад" FontWeight="Normal" />
+        <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+        <Button Name="Edit1" Content="Редактировать" Click="Edit" Height="45" Width="230"  FontWeight="Bold"   Background="#FFD0F1C7" FontFamily="Cruinn" FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для редактирования записи" />
+            <Button Content="Добавить лечение"  Click="Purpose_treatment" Width="230" Height="45" Margin="10 0 0 0" Background="#FFC7D5F1"  FontFamily="Cruinn" FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для того, чтобы вернуться назад" FontWeight="Normal" />
+        </StackPanel>
+    </Grid>
+</Page>

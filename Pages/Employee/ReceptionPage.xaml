@@ -1,0 +1,85 @@
+﻿<Page x:Class="VeterinaryСlinic.Pages.Employee.ReceptionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:VeterinaryСlinic.Pages.Employee"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ReceptionPage">
+
+    <Grid Background="#FFFAF5EF">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="341*"/>
+            <RowDefinition Height="48*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox   Margin="10 5 10 0"  Height="30"    FontFamily="Cruinn" FontSize="20"  Name="Search" TextChanged="Search_TextChanged" materialDesign:HintAssist.FloatingScale="0.0" materialDesign:HintAssist.Hint="Введите для поиска" materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+        <Menu Grid.Column="1" FontFamily="Cruinn" FontSize="20" Margin="0 10 0 0">
+            <MenuItem>
+                <MenuItem.Header>
+                    <Image Source="/Image/Filter.png" Width="30" ToolTip="Нажмите для выбора фильтра"/>
+                </MenuItem.Header>
+                <Label Content="Паицент" FontSize="18"/>
+                <ComboBox Name="PatientComboBox" SelectionChanged="PatientComboBox_SelectionChanged" Background="#FFE9F4E6"/>
+                <StackPanel/>
+                <Label Content="Владелец" FontSize="18"/>
+                <ComboBox Name="OwnersComboBox" SelectionChanged="OwnersComboBox_SelectionChanged" Margin="0 0 0 0" Background="#FFE9F4E6"/>
+                <StackPanel/>
+
+                <Label Content="Ветеринар" FontSize="18"/>
+                <ComboBox Name="VeterinarianComboBox" SelectionChanged="VeterinarianComboBox_SelectionChanged" Width="250" Background="#FFE9F4E6"/>
+                <StackPanel/>
+                <Button  Content="Сбросить" Click="Reset_filters" Background="#FFE5C7F1"  FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для того, чтобы сбросить филтры"/>
+            </MenuItem>
+        </Menu>
+
+
+        <Button Content="Добавить"  Grid.Column="2" Click="Before" Width="230" Height="45" Margin="0 0 0 0" Background="#FFC7D5F1"  FontFamily="Cruinn" FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для редактирования записи" FontWeight="Normal" />
+        <Image Source="/Image/Update.png" Width="30" Grid.Column="2" HorizontalAlignment="Right" Margin="0 0 80 0" MouseLeftButtonDown="Image_MouseLeftButtonDown" ToolTip="Нажмите для обновления данных"/>
+
+
+        <DataGrid  Name="dgReception" IsReadOnly="True" AutoGenerateColumns="False" ColumnWidth="*" Grid.ColumnSpan="3" Grid.Row="1"  >
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#FFDFF1C5"/>
+                    <Setter Property="FontSize" Value="22"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontFamily" Value="Cruinn"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Height" Value="30"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Код приёма" Binding="{Binding ReceptionId}" FontSize="20" FontFamily="Cruinn"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding FormattedDate}" FontSize="20" FontFamily="Cruinn"/>
+                <DataGridTextColumn Header="Время" Binding="{Binding Time}" FontSize="20" FontFamily="Cruinn"/>
+                <DataGridTextColumn Header="Владелец"  Binding="{Binding Patients.Owners.FullName}" FontSize="20" FontFamily="Cruinn"/>
+                <DataGridTextColumn Header="Пациент" Binding="{Binding Patients.Name}" FontSize="20" FontFamily="Cruinn"/>
+                <DataGridTextColumn Header="Ветеринар" Binding="{Binding Veterinarians.FullName}" FontSize="20" FontFamily="Cruinn"/>
+            </DataGrid.Columns>
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                </Style>
+            </DataGrid.ItemContainerStyle>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Background="#FFF3E4F6"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="10 0 0 0">
+            <Button Content="Редактировать" Click="Edit" Height="45" Width="230"  FontWeight="Bold"   Background="#FFD0F1C7" FontFamily="Cruinn" FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для редактирования записи" />
+            <Button Content="Удалить" Click="Remove"  Margin="10 0 0 0" Height="45" Width="230" FontWeight="Bold" Background="#FFE5C7F1" FontFamily="Cruinn" FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для удаления записи" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="10 0 0 0"  Grid.Column="2">
+            <Button Content="Записать на услугу" Click="Record" Width="230" Height="45" Margin="0 0 0 0" Background="#FFC7D5F1"  FontFamily="Cruinn" FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для записи пациента на услугу" FontWeight="Normal" />
+             <Button Content="Вывести чек"  Click="Cheque" Width="230" Height="45" Margin="10 0 0 0" Background="#FFC7D5F1"  FontFamily="Cruinn" FontSize="20"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"  Style="{StaticResource MaterialDesignRaisedLightButton}"  ToolTip="Нажмите для записи пациента на услугу" FontWeight="Normal" />
+        </StackPanel>
+    </Grid>
+</Page>
