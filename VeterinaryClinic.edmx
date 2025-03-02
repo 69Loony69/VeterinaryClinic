@@ -1,0 +1,757 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Veterinary_Clinic" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Diagnosis">
+          <Key>
+            <PropertyRef Name="DiagnosisId" />
+          </Key>
+          <Property Name="DiagnosisId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Medication">
+          <Key>
+            <PropertyRef Name="MedicationId" />
+          </Key>
+          <Property Name="MedicationId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="OwnerId" />
+          </Key>
+          <Property Name="OwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="30" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ViewId" Type="int" Nullable="false" />
+          <Property Name="Breed" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Paul" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DayOfBirth" Type="date" />
+        </EntityType>
+        <EntityType Name="Reception">
+          <Key>
+            <PropertyRef Name="ReceptionId" />
+          </Key>
+          <Property Name="ReceptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="VeterinarianId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="Complaints" Type="nvarchar" MaxLength="100" />
+          <Property Name="DiagnosisId" Type="int" />
+        </EntityType>
+        <EntityType Name="ReceptionServices">
+          <Key>
+            <PropertyRef Name="ReceptionServicesId" />
+          </Key>
+          <Property Name="ReceptionServicesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceptionId" Type="int" Nullable="false" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Cost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specializations">
+          <Key>
+            <PropertyRef Name="SpecializationsId" />
+          </Key>
+          <Property Name="SpecializationsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Treatment">
+          <Key>
+            <PropertyRef Name="TreatmentId" />
+          </Key>
+          <Property Name="TreatmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceptionId" Type="int" Nullable="false" />
+          <Property Name="MedicationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Veterinarians">
+          <Key>
+            <PropertyRef Name="VeterinarianId" />
+          </Key>
+          <Property Name="VeterinarianId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="30" />
+          <Property Name="SpecializationsId" Type="int" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View">
+          <Key>
+            <PropertyRef Name="ViewId" />
+          </Key>
+          <Property Name="ViewId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Patients_Owners">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="OwnerId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Patients_View">
+          <End Role="View" Type="Self.View" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="View">
+              <PropertyRef Name="ViewId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="ViewId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reception_Diagnosis">
+          <End Role="Diagnosis" Type="Self.Diagnosis" Multiplicity="0..1" />
+          <End Role="Reception" Type="Self.Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diagnosis">
+              <PropertyRef Name="DiagnosisId" />
+            </Principal>
+            <Dependent Role="Reception">
+              <PropertyRef Name="DiagnosisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reception_Patients">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reception" Type="Self.Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="Reception">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reception_Veterinarians">
+          <End Role="Veterinarians" Type="Self.Veterinarians" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reception" Type="Self.Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Veterinarians">
+              <PropertyRef Name="VeterinarianId" />
+            </Principal>
+            <Dependent Role="Reception">
+              <PropertyRef Name="VeterinarianId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceptionServices_Reception">
+          <End Role="Reception" Type="Self.Reception" Multiplicity="1" />
+          <End Role="ReceptionServices" Type="Self.ReceptionServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reception">
+              <PropertyRef Name="ReceptionId" />
+            </Principal>
+            <Dependent Role="ReceptionServices">
+              <PropertyRef Name="ReceptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceptionServices_Services">
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
+          <End Role="ReceptionServices" Type="Self.ReceptionServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="ReceptionServices">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treatment_Medication">
+          <End Role="Medication" Type="Self.Medication" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medication">
+              <PropertyRef Name="MedicationId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="MedicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treatment_Reception">
+          <End Role="Reception" Type="Self.Reception" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reception">
+              <PropertyRef Name="ReceptionId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="ReceptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Veterinarians_Specializations">
+          <End Role="Specializations" Type="Self.Specializations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Veterinarians" Type="Self.Veterinarians" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specializations">
+              <PropertyRef Name="SpecializationsId" />
+            </Principal>
+            <Dependent Role="Veterinarians">
+              <PropertyRef Name="SpecializationsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Veterinary_ClinicContainer">
+          <EntitySet Name="Diagnosis" EntityType="Self.Diagnosis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medication" EntityType="Self.Medication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reception" EntityType="Self.Reception" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceptionServices" EntityType="Self.ReceptionServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specializations" EntityType="Self.Specializations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treatment" EntityType="Self.Treatment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Veterinarians" EntityType="Self.Veterinarians" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View" EntityType="Self.View" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Patients_Owners" Association="Self.FK_Patients_Owners">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patients_View" Association="Self.FK_Patients_View">
+            <End Role="View" EntitySet="View" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reception_Diagnosis" Association="Self.FK_Reception_Diagnosis">
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+            <End Role="Reception" EntitySet="Reception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reception_Patients" Association="Self.FK_Reception_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Reception" EntitySet="Reception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reception_Veterinarians" Association="Self.FK_Reception_Veterinarians">
+            <End Role="Veterinarians" EntitySet="Veterinarians" />
+            <End Role="Reception" EntitySet="Reception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceptionServices_Reception" Association="Self.FK_ReceptionServices_Reception">
+            <End Role="Reception" EntitySet="Reception" />
+            <End Role="ReceptionServices" EntitySet="ReceptionServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceptionServices_Services" Association="Self.FK_ReceptionServices_Services">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="ReceptionServices" EntitySet="ReceptionServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treatment_Medication" Association="Self.FK_Treatment_Medication">
+            <End Role="Medication" EntitySet="Medication" />
+            <End Role="Treatment" EntitySet="Treatment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treatment_Reception" Association="Self.FK_Treatment_Reception">
+            <End Role="Reception" EntitySet="Reception" />
+            <End Role="Treatment" EntitySet="Treatment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Veterinarians_Specializations" Association="Self.FK_Veterinarians_Specializations">
+            <End Role="Specializations" EntitySet="Specializations" />
+            <End Role="Veterinarians" EntitySet="Veterinarians" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Veterinary_Clinic" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Diagnosis">
+          <Key>
+            <PropertyRef Name="DiagnosisId" />
+          </Key>
+          <Property Name="DiagnosisId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Reception" Relationship="Self.FK_Reception_Diagnosis" FromRole="Diagnosis" ToRole="Reception" />
+        </EntityType>
+        <EntityType Name="Medication">
+          <Key>
+            <PropertyRef Name="MedicationId" />
+          </Key>
+          <Property Name="MedicationId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Treatment" Relationship="Self.FK_Treatment_Medication" FromRole="Medication" ToRole="Treatment" />
+        </EntityType>
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="OwnerId" />
+          </Key>
+          <Property Name="OwnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK_Patients_Owners" FromRole="Owners" ToRole="Patients" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ViewId" Type="Int32" Nullable="false" />
+          <Property Name="Breed" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Paul" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DayOfBirth" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Owners" Relationship="Self.FK_Patients_Owners" FromRole="Patients" ToRole="Owners" />
+          <NavigationProperty Name="View" Relationship="Self.FK_Patients_View" FromRole="Patients" ToRole="View" />
+          <NavigationProperty Name="Reception" Relationship="Self.FK_Reception_Patients" FromRole="Patients" ToRole="Reception" />
+        </EntityType>
+        <EntityType Name="Reception">
+          <Key>
+            <PropertyRef Name="ReceptionId" />
+          </Key>
+          <Property Name="ReceptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="VeterinarianId" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="Complaints" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DiagnosisId" Type="Int32" />
+          <NavigationProperty Name="Diagnosis" Relationship="Self.FK_Reception_Diagnosis" FromRole="Reception" ToRole="Diagnosis" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK_Reception_Patients" FromRole="Reception" ToRole="Patients" />
+          <NavigationProperty Name="Veterinarians" Relationship="Self.FK_Reception_Veterinarians" FromRole="Reception" ToRole="Veterinarians" />
+          <NavigationProperty Name="ReceptionServices" Relationship="Self.FK_ReceptionServices_Reception" FromRole="Reception" ToRole="ReceptionServices" />
+          <NavigationProperty Name="Treatment" Relationship="Self.FK_Treatment_Reception" FromRole="Reception" ToRole="Treatment" />
+        </EntityType>
+        <EntityType Name="ReceptionServices">
+          <Key>
+            <PropertyRef Name="ReceptionServicesId" />
+          </Key>
+          <Property Name="ReceptionServicesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceptionId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reception" Relationship="Self.FK_ReceptionServices_Reception" FromRole="ReceptionServices" ToRole="Reception" />
+          <NavigationProperty Name="Services" Relationship="Self.FK_ReceptionServices_Services" FromRole="ReceptionServices" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ReceptionServices" Relationship="Self.FK_ReceptionServices_Services" FromRole="Services" ToRole="ReceptionServices" />
+        </EntityType>
+        <EntityType Name="Specializations">
+          <Key>
+            <PropertyRef Name="SpecializationsId" />
+          </Key>
+          <Property Name="SpecializationsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Veterinarians" Relationship="Self.FK_Veterinarians_Specializations" FromRole="Specializations" ToRole="Veterinarians" />
+        </EntityType>
+        <EntityType Name="Treatment">
+          <Key>
+            <PropertyRef Name="TreatmentId" />
+          </Key>
+          <Property Name="TreatmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceptionId" Type="Int32" Nullable="false" />
+          <Property Name="MedicationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Medication" Relationship="Self.FK_Treatment_Medication" FromRole="Treatment" ToRole="Medication" />
+          <NavigationProperty Name="Reception" Relationship="Self.FK_Treatment_Reception" FromRole="Treatment" ToRole="Reception" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Veterinarians">
+          <Key>
+            <PropertyRef Name="VeterinarianId" />
+          </Key>
+          <Property Name="VeterinarianId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="SpecializationsId" Type="Int32" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Reception" Relationship="Self.FK_Reception_Veterinarians" FromRole="Veterinarians" ToRole="Reception" />
+          <NavigationProperty Name="Specializations" Relationship="Self.FK_Veterinarians_Specializations" FromRole="Veterinarians" ToRole="Specializations" />
+        </EntityType>
+        <EntityType Name="View">
+          <Key>
+            <PropertyRef Name="ViewId" />
+          </Key>
+          <Property Name="ViewId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK_Patients_View" FromRole="View" ToRole="Patients" />
+        </EntityType>
+        <Association Name="FK_Reception_Diagnosis">
+          <End Role="Diagnosis" Type="Self.Diagnosis" Multiplicity="0..1" />
+          <End Role="Reception" Type="Self.Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diagnosis">
+              <PropertyRef Name="DiagnosisId" />
+            </Principal>
+            <Dependent Role="Reception">
+              <PropertyRef Name="DiagnosisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treatment_Medication">
+          <End Role="Medication" Type="Self.Medication" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medication">
+              <PropertyRef Name="MedicationId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="MedicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Patients_Owners">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="OwnerId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Patients_View">
+          <End Role="View" Type="Self.View" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="View">
+              <PropertyRef Name="ViewId" />
+            </Principal>
+            <Dependent Role="Patients">
+              <PropertyRef Name="ViewId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reception_Patients">
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reception" Type="Self.Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patients">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="Reception">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reception_Veterinarians">
+          <End Role="Veterinarians" Type="Self.Veterinarians" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reception" Type="Self.Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Veterinarians">
+              <PropertyRef Name="VeterinarianId" />
+            </Principal>
+            <Dependent Role="Reception">
+              <PropertyRef Name="VeterinarianId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceptionServices_Reception">
+          <End Role="Reception" Type="Self.Reception" Multiplicity="1" />
+          <End Role="ReceptionServices" Type="Self.ReceptionServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reception">
+              <PropertyRef Name="ReceptionId" />
+            </Principal>
+            <Dependent Role="ReceptionServices">
+              <PropertyRef Name="ReceptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treatment_Reception">
+          <End Role="Reception" Type="Self.Reception" Multiplicity="1" />
+          <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reception">
+              <PropertyRef Name="ReceptionId" />
+            </Principal>
+            <Dependent Role="Treatment">
+              <PropertyRef Name="ReceptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceptionServices_Services">
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
+          <End Role="ReceptionServices" Type="Self.ReceptionServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="ReceptionServices">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Veterinarians_Specializations">
+          <End Role="Specializations" Type="Self.Specializations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Veterinarians" Type="Self.Veterinarians" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specializations">
+              <PropertyRef Name="SpecializationsId" />
+            </Principal>
+            <Dependent Role="Veterinarians">
+              <PropertyRef Name="SpecializationsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VeterinaryClinic" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Diagnosis" EntityType="Self.Diagnosis" />
+          <EntitySet Name="Medication" EntityType="Self.Medication" />
+          <EntitySet Name="Owners" EntityType="Self.Owners" />
+          <EntitySet Name="Patients" EntityType="Self.Patients" />
+          <EntitySet Name="Reception" EntityType="Self.Reception" />
+          <EntitySet Name="ReceptionServices" EntityType="Self.ReceptionServices" />
+          <EntitySet Name="Services" EntityType="Self.Services" />
+          <EntitySet Name="Specializations" EntityType="Self.Specializations" />
+          <EntitySet Name="Treatment" EntityType="Self.Treatment" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Veterinarians" EntityType="Self.Veterinarians" />
+          <EntitySet Name="View" EntityType="Self.View" />
+          <AssociationSet Name="FK_Reception_Diagnosis" Association="Self.FK_Reception_Diagnosis">
+            <End Role="Diagnosis" EntitySet="Diagnosis" />
+            <End Role="Reception" EntitySet="Reception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treatment_Medication" Association="Self.FK_Treatment_Medication">
+            <End Role="Medication" EntitySet="Medication" />
+            <End Role="Treatment" EntitySet="Treatment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patients_Owners" Association="Self.FK_Patients_Owners">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patients_View" Association="Self.FK_Patients_View">
+            <End Role="View" EntitySet="View" />
+            <End Role="Patients" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reception_Patients" Association="Self.FK_Reception_Patients">
+            <End Role="Patients" EntitySet="Patients" />
+            <End Role="Reception" EntitySet="Reception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reception_Veterinarians" Association="Self.FK_Reception_Veterinarians">
+            <End Role="Veterinarians" EntitySet="Veterinarians" />
+            <End Role="Reception" EntitySet="Reception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceptionServices_Reception" Association="Self.FK_ReceptionServices_Reception">
+            <End Role="Reception" EntitySet="Reception" />
+            <End Role="ReceptionServices" EntitySet="ReceptionServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treatment_Reception" Association="Self.FK_Treatment_Reception">
+            <End Role="Reception" EntitySet="Reception" />
+            <End Role="Treatment" EntitySet="Treatment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceptionServices_Services" Association="Self.FK_ReceptionServices_Services">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="ReceptionServices" EntitySet="ReceptionServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Veterinarians_Specializations" Association="Self.FK_Veterinarians_Specializations">
+            <End Role="Specializations" EntitySet="Specializations" />
+            <End Role="Veterinarians" EntitySet="Veterinarians" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Veterinary_ClinicContainer" CdmEntityContainer="VeterinaryClinic">
+          <EntitySetMapping Name="Diagnosis">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Diagnosis">
+              <MappingFragment StoreEntitySet="Diagnosis">
+                <ScalarProperty Name="DiagnosisId" ColumnName="DiagnosisId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medication">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Medication">
+              <MappingFragment StoreEntitySet="Medication">
+                <ScalarProperty Name="MedicationId" ColumnName="MedicationId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owners">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Owners">
+              <MappingFragment StoreEntitySet="Owners">
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Patients">
+              <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ViewId" ColumnName="ViewId" />
+                <ScalarProperty Name="Breed" ColumnName="Breed" />
+                <ScalarProperty Name="Paul" ColumnName="Paul" />
+                <ScalarProperty Name="DayOfBirth" ColumnName="DayOfBirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reception">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Reception">
+              <MappingFragment StoreEntitySet="Reception">
+                <ScalarProperty Name="ReceptionId" ColumnName="ReceptionId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="VeterinarianId" ColumnName="VeterinarianId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="Complaints" ColumnName="Complaints" />
+                <ScalarProperty Name="DiagnosisId" ColumnName="DiagnosisId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceptionServices">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.ReceptionServices">
+              <MappingFragment StoreEntitySet="ReceptionServices">
+                <ScalarProperty Name="ReceptionServicesId" ColumnName="ReceptionServicesId" />
+                <ScalarProperty Name="ReceptionId" ColumnName="ReceptionId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Services">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specializations">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Specializations">
+              <MappingFragment StoreEntitySet="Specializations">
+                <ScalarProperty Name="SpecializationsId" ColumnName="SpecializationsId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Treatment">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Treatment">
+              <MappingFragment StoreEntitySet="Treatment">
+                <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+                <ScalarProperty Name="ReceptionId" ColumnName="ReceptionId" />
+                <ScalarProperty Name="MedicationId" ColumnName="MedicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Veterinarians">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.Veterinarians">
+              <MappingFragment StoreEntitySet="Veterinarians">
+                <ScalarProperty Name="VeterinarianId" ColumnName="VeterinarianId" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="SpecializationsId" ColumnName="SpecializationsId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View">
+            <EntityTypeMapping TypeName="Veterinary_Clinic.View">
+              <MappingFragment StoreEntitySet="View">
+                <ScalarProperty Name="ViewId" ColumnName="ViewId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

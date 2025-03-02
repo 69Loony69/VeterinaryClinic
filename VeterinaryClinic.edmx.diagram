@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2fbebfa9c1ed4e2fb226658803341eb2" Name="Diagram1">
+        <EntityTypeShape EntityType="Veterinary_Clinic.Diagnosis" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Medication" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Owners" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Patients" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Reception" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.ReceptionServices" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Services" Width="1.5" PointX="5.25" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Specializations" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Treatment" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Users" Width="1.5" PointX="7.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.Veterinarians" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Veterinary_Clinic.View" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_Reception_Diagnosis" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_Treatment_Medication" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_Patients_Owners" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_Patients_View" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_Reception_Patients" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_Reception_Veterinarians" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_ReceptionServices_Reception" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_Treatment_Reception" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_ReceptionServices_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="Veterinary_Clinic.FK_Veterinarians_Specializations" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
